@@ -1,750 +1,518 @@
-# 🍔 Vingo - Food Delivery Platform
+<div align="center">
 
-<p align="center">
-  <strong>A full-stack food delivery platform built with React, Node.js, Express and MongoDB.</strong>
-</p>
+# 🍔 Vingo
 
-<p align="center">
-  Discover restaurants, browse food, place orders, manage restaurants, and complete deliveries with OTP verification.
-</p>
+### A production-grade, full-stack food delivery platform
 
-<p align="center">
-  🚀 <a href="https://vingo-food-delivery-app-1.onrender.com/">Live Frontend</a>
-  &nbsp;&nbsp;•&nbsp;&nbsp;
-  ⚙️ <a href="https://vingo-food-delivery-app-gwsn.onrender.com/">Live Backend</a>
-</p>
+Real-time ordering, restaurant management, and OTP-verified deliveries — built on the MERN stack with Socket.IO, Razorpay, and Firebase.
 
----
+[![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)](https://react.dev/)
+[![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express.js-000000?style=flat&logo=express&logoColor=white)](https://expressjs.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![Socket.IO](https://img.shields.io/badge/Socket.IO-black?style=flat&logo=socket.io&badgeColor=010101)](https://socket.io/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Razorpay](https://img.shields.io/badge/Razorpay-0C2451?style=flat&logo=razorpay&logoColor=white)](https://razorpay.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](#-license)
+
+**[🚀 Live App](https://vingo-food-delivery-app-1.onrender.com/)** &nbsp;·&nbsp; **[⚙️ API](https://vingo-food-delivery-app-gwsn.onrender.com/)** &nbsp;·&nbsp; **[🐛 Report Bug](https://github.com/priyanshuguptacoder/Vingo-Food-Delivery-App/issues)**
+
+</div>
+
+<br>
+
+## 📑 Table of Contents
+
+- [About](#-about)
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [Architecture](#️-architecture)
+- [Core Workflows](#-core-workflows)
+- [Project Structure](#-project-structure)
+- [API Reference](#-api-reference)
+- [Database Models](#️-database-models)
+- [Getting Started](#-getting-started)
+- [Environment Variables](#️-environment-variables)
+- [Deployment](#️-deployment)
+- [Roadmap](#-roadmap)
+- [Contributors](#-contributors)
+
+<br>
 
 ## 📖 About
 
-**Vingo** is a full-stack food delivery application that provides a complete restaurant, ordering, payment, and delivery workflow.
+**Vingo** is a full-stack food delivery application modeled after real-world platforms like Zomato and Swiggy — covering the complete lifecycle from restaurant discovery to OTP-verified doorstep delivery.
 
-The platform supports three roles:
+It's built around **three roles that interact in real time**:
 
-- 👤 Customer
-- 🏪 Restaurant Owner
-- 🛵 Delivery Boy
+| Role | What they do |
+|---|---|
+| 👤 **Customer** | Discover nearby restaurants, browse & search food, pay online, and track orders live |
+| 🏪 **Restaurant Owner** | Manage their storefront, menu, and incoming order pipeline |
+| 🛵 **Delivery Boy** | Receive live assignments, navigate to pickup/drop, and confirm delivery via OTP |
 
-Customers can discover restaurants using their location, browse food, search items, manage their cart, place orders and track deliveries.
+What sets this apart from a typical CRUD project: **live Socket.IO updates**, **Razorpay payment verification**, **city-based discovery with automatic fallback**, and an **OTP-secured handoff** that mirrors how production delivery apps actually confirm drop-off.
 
-Restaurant owners can manage their restaurant, food items and customer orders.
-
-Delivery boys receive delivery assignments, accept orders and complete deliveries using OTP verification.
-
----
+<br>
 
 ## ✨ Features
 
-### 👤 Customer
+<table>
+<tr>
+<td valign="top" width="33%">
 
-- 🔐 Email & password authentication
-- 🔑 Google authentication
-- 📍 Location detection
-- 🏙️ City-based restaurant discovery
-- 🏪 Restaurant browsing
-- 🍕 Food item browsing
-- 🔎 Food search
-- 🥗 Veg / Non-Veg filtering
-- ⭐ Food ratings
-- 🛒 Shopping cart
-- ➕ Quantity management
-- 💳 Razorpay online payments
-- 📦 Order placement
-- 📋 Order history
-- 🚚 Order tracking
-- 📍 Delivery location support
+### 👤 Customer
+- Email/password + Google auth
+- Auto location detection
+- City-based restaurant discovery
+- Search + veg/non-veg filters
+- Ratings & reviews
+- Cart with live quantity sync
+- Razorpay checkout
+- Order history & live tracking
+
+</td>
+<td valign="top" width="33%">
 
 ### 🏪 Restaurant Owner
+- Owner authentication
+- Storefront setup + image upload
+- Full menu CRUD
+- Price & category management
+- Live incoming order feed
+- Order status pipeline
+- Delivery hand-off trigger
 
-- 🔐 Owner authentication
-- 🏪 Create & manage restaurant
-- 🖼️ Restaurant image upload
-- 🍔 Add food items
-- ✏️ Edit food items
-- 🗑️ Delete food items
-- 💰 Manage prices
-- 🥗 Veg / Non-Veg classification
-- ⭐ Food ratings
-- 📦 Receive orders
-- 🔄 Update order status
-- 🚚 Move orders to "Out for Delivery"
-- 🛵 Delivery assignment
+</td>
+<td valign="top" width="33%">
 
 ### 🛵 Delivery Boy
+- Delivery authentication
+- Real-time assignment feed
+- Live location broadcasting
+- Accept / reject assignments
+- Map view of pickup & drop
+- OTP request & verification
+- Delivery stats dashboard
 
-- 🔐 Delivery boy authentication
-- 📡 Real-time delivery assignments
-- 📍 Live location updates
-- 📦 View delivery assignments
-- ✅ Accept delivery orders
-- 🧭 View restaurant/customer locations
-- 📩 Request delivery OTP
-- 🔢 Verify delivery OTP
-- ✅ Mark order as delivered
-- 📊 Completed deliveries
-- 📈 Delivery statistics
+</td>
+</tr>
+</table>
 
----
+<br>
 
-## 🌍 Location-Based Restaurant System
+## 🧱 Tech Stack
 
-Vingo uses the user's detected city to find restaurants.
+<table>
+<tr>
+<td valign="top" width="33%">
 
-### When restaurants exist
+**Frontend**
+```
+React + Vite
+React Router
+Redux Toolkit
+Axios
+Tailwind CSS
+Leaflet / React Leaflet
+Recharts
+Socket.IO Client
+Firebase Auth
+```
 
-    User Location
-          ↓
-    City Detection
-          ↓
-       MongoDB
-          ↓
-    City Restaurants Found
-          ↓
-    Show City Restaurants
+</td>
+<td valign="top" width="33%">
 
-### When restaurants do not exist
+**Backend**
+```
+Node.js + Express
+MongoDB + Mongoose
+JWT + bcryptjs
+Socket.IO
+Cloudinary
+Razorpay
+Multer
+```
 
-    User Location
-          ↓
-    City Detection
-          ↓
-       MongoDB
-          ↓
-    No Restaurants Found
-          ↓
-    Default / Demo Restaurants
-          ↓
-    Show Recommended Restaurants
+</td>
+<td valign="top" width="33%">
 
-This fallback prevents the application from showing an empty restaurant and food section for unsupported cities.
+**Infrastructure**
+```
+MongoDB Atlas
+Firebase Auth
+Cloudinary
+Razorpay
+Brevo (email)
+Geoapify (geocoding)
+Render (hosting)
+```
 
----
+</td>
+</tr>
+</table>
 
-## 🔄 Order & Delivery Workflow
+<br>
 
-    Customer
-       ↓
-    Place Order
-       ↓
-    Restaurant Owner
-       ↓
-    Accept / Prepare Order
-       ↓
-    Out for Delivery
-       ↓
-    Delivery Assignment Created
-       ↓
-    Delivery Boy Receives Assignment
-       ↓
-    Accept Order
-       ↓
-    Assignment = assigned
-       ↓
-    Mark As Delivered
-       ↓
-    Generate Delivery OTP
-       ↓
-    Send OTP to Customer
-       ↓
-    Delivery Boy Enters OTP
-       ↓
-    OTP Verified
-       ↓
-    Shop Order = delivered
-       ↓
-    Delivery Assignment = completed
+## 🏗️ Architecture
 
----
+```
+                     ┌────────────────────────┐
+                     │      Vingo Frontend      │
+                     │       React + Vite        │
+                     └────────────┬─────────────┘
+                                  │
+                        Axios  +  Socket.IO
+                                  │
+                                  ▼
+                     ┌────────────────────────┐
+                     │     Express Backend      │
+                     │         Node.js           │
+                     └────────────┬─────────────┘
+                                  │
+            ┌─────────────────────┼─────────────────────┐
+            │                     │                      │
+            ▼                     ▼                      ▼
+      MongoDB Atlas           Cloudinary                Brevo
+       ─────────────           images                  emails
+       Users
+       Shops
+       Items
+       Orders
+       Delivery Assignments
 
-## 📧 OTP System
+  Firebase   →  Google Authentication
+  Razorpay   →  Payment processing + verification
+  Geoapify   →  Reverse geocoding for city detection
+  Socket.IO  →  Live order / assignment / location events
+```
 
-The delivery verification system works like this:
+<br>
 
-    Generate OTP
-         ↓
-    Save OTP in MongoDB
-         ↓
-    Set expiration time
-         ↓
-    Send OTP using Brevo
-         ↓
-    Customer receives OTP
-         ↓
-    Delivery Boy enters OTP
-         ↓
-    Verify OTP
-         ↓
-    Order Delivered
+## 🔄 Core Workflows
 
-The project uses the **Brevo HTTP API** for transactional email delivery.
+<details open>
+<summary><strong>🌍 Location-based restaurant discovery</strong></summary>
 
----
+<br>
 
-# 🧱 Tech Stack
+Vingo detects the user's city via reverse geocoding, then queries MongoDB. If no restaurants exist yet for that city, it falls back to curated demo restaurants instead of an empty screen — so the app never feels broken in a new market.
 
-## Frontend
+```
+User Location → City Detection → MongoDB Lookup
+                                       │
+                    ┌──────────────────┴──────────────────┐
+                    ▼                                      ▼
+          City Restaurants Found                No Restaurants Found
+                    │                                      │
+          Show City Restaurants              Show Default / Demo Restaurants
+```
 
-- React
-- Vite
-- React Router
-- Redux Toolkit
-- React Redux
-- Axios
-- Tailwind CSS
-- React Icons
-- Leaflet
-- React Leaflet
-- Recharts
-- Socket.IO Client
-- Firebase Authentication
+</details>
 
-## Backend
+<details>
+<summary><strong>📦 Order → Delivery lifecycle</strong></summary>
 
-- Node.js
-- Express.js
-- MongoDB
-- Mongoose
-- JWT
-- bcryptjs
-- Socket.IO
-- Cloudinary
-- Razorpay
-- Axios
-- Multer
+<br>
 
-## External Services
+```
+Customer places order
+   → Restaurant owner accepts & prepares
+   → Owner marks "Out for Delivery"
+   → Delivery assignment created
+   → Nearby delivery boy notified in real time
+   → Delivery boy accepts (assignment: assigned)
+   → Delivery boy clicks "Mark As Delivered"
+   → OTP generated & emailed to customer
+   → Delivery boy enters OTP on handoff
+   → OTP verified
+   → Shop order → delivered
+   → Delivery assignment → completed
+```
 
-- 🍃 MongoDB Atlas
-- 🔥 Firebase Authentication
-- ☁️ Cloudinary
-- 💳 Razorpay
-- 📧 Brevo
-- 🗺️ Geoapify
-- 🔌 Socket.IO
+</details>
 
----
+<details>
+<summary><strong>📧 OTP verification</strong></summary>
 
-# 🏗️ Architecture
+<br>
 
-                         ┌──────────────────────┐
-                         │    Vingo Frontend    │
-                         │     React + Vite     │
-                         └───────────┬──────────┘
-                                     │
-                              Axios / Socket.IO
-                                     │
-                                     ▼
-                         ┌──────────────────────┐
-                         │   Express Backend    │
-                         │       Node.js        │
-                         └───────────┬──────────┘
-                                     │
-              ┌──────────────────────┼──────────────────────┐
-              │                      │                      │
-              ▼                      ▼                      ▼
-       MongoDB Atlas             Cloudinary               Brevo
-         Database                 Images                 Emails
-              │
-              ├── Users
-              ├── Shops
-              ├── Items
-              ├── Orders
-              └── Delivery Assignments
+```
+Generate OTP → Persist in MongoDB with expiry
+   → Send via Brevo HTTP API → Customer receives OTP
+   → Delivery boy enters OTP at drop-off
+   → Backend verifies → Order marked delivered
+```
 
-    Firebase  → Google Authentication
-    Razorpay  → Online Payments
-    Geoapify  → Location / Reverse Geocoding
-    Socket.IO → Real-Time Communication
+</details>
 
----
+<details>
+<summary><strong>💳 Payment flow (Razorpay)</strong></summary>
 
-# 📁 Project Structure
+<br>
 
+```
+Customer checks out → Backend creates Razorpay order
+   → Razorpay checkout widget opens → Payment completed
+   → Backend verifies payment signature
+   → Order marked as paid → Restaurant notified in real time
+```
+
+</details>
+
+<br>
+
+## 📁 Project Structure
+
+```
 Vingo-Food-Delivery-App/
 │
 ├── backend/
-│   ├── config/
-│   │   └── db.js
-│   │
+│   ├── config/db.js
 │   ├── controllers/
 │   │   ├── auth.controllers.js
 │   │   ├── item.controllers.js
 │   │   ├── order.controllers.js
 │   │   ├── shop.controllers.js
 │   │   └── user.controllers.js
-│   │
 │   ├── middlewares/
 │   │   ├── isAuth.js
 │   │   └── multer.js
-│   │
 │   ├── models/
 │   │   ├── deliveryAssignment.model.js
 │   │   ├── item.model.js
 │   │   ├── order.model.js
 │   │   ├── shop.model.js
 │   │   └── user.model.js
-│   │
-│   ├── routes/
-│   │   ├── auth.routes.js
-│   │   ├── item.routes.js
-│   │   ├── order.routes.js
-│   │   ├── shop.routes.js
-│   │   └── user.routes.js
-│   │
+│   ├── routes/            # auth · item · order · shop · user
 │   ├── utils/
 │   │   ├── cloudinary.js
 │   │   └── mail.js
-│   │
 │   ├── index.js
-│   ├── socket.js
-│   ├── package.json
-│   └── package-lock.json
+│   └── socket.js
 │
 ├── frontend/
-│   ├── public/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── hooks/
-│   │   ├── pages/
-│   │   ├── redux/
-│   │   ├── App.jsx
-│   │   ├── main.jsx
-│   │   └── firebase.js
-│   │
-│   ├── package.json
-│   ├── package-lock.json
-│   └── vite.config.js
+│   └── src/
+│       ├── components/
+│       ├── hooks/
+│       ├── pages/
+│       ├── redux/
+│       ├── App.jsx
+│       ├── main.jsx
+│       └── firebase.js
 │
 └── README.md
-
----
-
-# 🔌 API Endpoints
-
-## Authentication
-
-    POST   /api/auth/signup
-    POST   /api/auth/signin
-    POST   /api/auth/logout
-    POST   /api/auth/send-otp
-    POST   /api/auth/verify-otp
-    POST   /api/auth/reset-password
-
-## Shops
-
-    POST   /api/shop/create-edit
-    GET    /api/shop/get-my
-    GET    /api/shop/get-by-city/:city
-
-## Food Items
-
-    POST   /api/item/add-item
-    POST   /api/item/edit-item/:itemId
-    GET    /api/item/get-by-id/:itemId
-    GET    /api/item/delete/:itemId
-    GET    /api/item/get-by-city/:city
-    GET    /api/item/get-by-shop/:shopId
-    GET    /api/item/search-items
-    POST   /api/item/rating
-
-## Orders
-
-    POST   /api/order/place-order
-    POST   /api/order/verify-payment
-    GET    /api/order/my-orders
-    PUT    /api/order/update-status/:orderId/:shopId
-    GET    /api/order/delivery-boy-assignment
-    POST   /api/order/accept-order/:assignmentId
-    GET    /api/order/current-order
-    GET    /api/order/get-order-by-id/:orderId
-    POST   /api/order/send-delivery-otp
-    POST   /api/order/verify-delivery-otp
-    GET    /api/order/today-deliveries
-
----
-
-# 🗄️ Database Models
-
-## User
-
-Stores:
-
-- Full name
-- Email
-- Password
-- Mobile
-- Role
-- Location
-- OTP information
-- Socket ID
-
-Supported roles:
-
-    user
-    owner
-    deliveryBoy
-
-## Shop
-
-Stores:
-
-- Restaurant name
-- Restaurant image
-- Owner
-- City
-- State
-- Address
-- Food items
-- Default/demo flag
-
-Example:
-
-    {
-      "name": "Vingo Pizza House",
-      "city": "Jalandhar",
-      "state": "Punjab",
-      "isDefault": false
-    }
-
-Fallback restaurant:
-
-    {
-      "name": "Vingo Kitchen",
-      "city": "Vingo Demo",
-      "state": "Demo",
-      "isDefault": true
-    }
-
-## Item
-
-Stores:
-
-- Food name
-- Food image
-- Restaurant
-- Category
-- Price
-- Food type
-- Rating
-
-Supported categories:
-
-    Snacks
-    Main Course
-    Desserts
-    Pizza
-    Burgers
-    Sandwiches
-    South Indian
-    North Indian
-    Chinese
-    Fast Food
-    Others
-
-Food types:
-
-    veg
-    non veg
-
----
-
-# 🛒 Cart Flow
-
-    Browse Restaurant
-          ↓
-      Select Food
-          ↓
-       Add Cart
-          ↓
-    Update Quantity
-          ↓
-      Review Cart
-          ↓
-        Checkout
-          ↓
-      Select Payment
-          ↓
-       Place Order
-
----
-
-# 💳 Payment Flow
-
-    Customer
-        ↓
-    Place Order
-        ↓
-    Backend creates Razorpay Order
-        ↓
-    Razorpay Checkout
-        ↓
-    Payment Completed
-        ↓
-    Backend verifies Payment
-        ↓
-    Order marked as Paid
-        ↓
-    Restaurant receives Order
-
----
-
-# 📍 Location Flow
-
-    Browser Location
-          ↓
-    Latitude + Longitude
-          ↓
-    Reverse Geocoding
-          ↓
-          City
-          ↓
-    Restaurant Search
-          ↓
-        MongoDB
-
-If restaurants exist in the detected city, city-specific restaurants are shown.
-
-If no restaurants exist, default demo restaurants are shown.
-
----
-
-# 🔌 Real-Time Communication
-
-Socket.IO is used for real-time updates.
-
-Examples:
-
-    newOrder
-    newAssignment
-    order status updates
-    delivery location updates
-
-This allows restaurant owners and delivery boys to receive updates without refreshing the application.
-
----
-
-# 🔐 Authentication
-
-## Traditional Authentication
-
-    Email
-    Password
-    JWT
-
-## Google Authentication
-
-    Firebase
-       ↓
-    Google Login
-       ↓
-    Vingo User Session
-
----
-
-# ☁️ Image Management
-
-Restaurant and food images can be stored using Cloudinary.
-
-    Frontend
-       ↓
-    Image Upload
-       ↓
-    Multer
-       ↓
-    Cloudinary
-       ↓
-    Image URL
-       ↓
-    MongoDB
-
-Demo and fallback data can also use generated SVG data URLs.
-
----
-
-# ⚙️ Environment Variables
-
-## Backend
-
-Create:
-
-    PORT=8000
-
-    MONGODB_URL=your_mongodb_connection_string
-
-    JWT_SECRET=your_jwt_secret
-
-    EMAIL=your_verified_sender_email
-
-    BREVO_API_KEY=your_brevo_api_key
-
-    CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
-
-    CLOUDINARY_API_KEY=your_cloudinary_api_key
-
-    CLOUDINARY_API_SECRET=your_cloudinary_api_secret
-
-    RAZORPAY_KEY_ID=your_razorpay_key_id
-
-    RAZORPAY_KEY_SECRET=your_razorpay_key_secret
-
-## Frontend
-
-Create:
-
-    VITE_FIREBASE_APIKEY=your_firebase_api_key
-
-    VITE_GEOAPIKEY=your_geoapify_api_key
-
-### ⚠️ Security
-
-Never commit:
-
-    .env
-    API keys
-    MongoDB passwords
-    JWT secrets
-    Cloudinary secrets
-    Brevo API keys
-    Razorpay secret keys
-    Firebase private credentials
-
-Use environment variables locally and in Render.
-
----
-
-# 🚀 Run Locally
-
-## Clone
-
-    git clone https://github.com/priyanshuguptacoder/Vingo-Food-Delivery-App.git
-
-    cd Vingo-Food-Delivery-App
-
-## Backend
-
-    cd backend
-
-    npm install
-
-    npm run dev
-
-Backend runs on:
-
-    http://localhost:8000
-
-## Frontend
-
-Open another terminal:
-
-    cd frontend
-
-    npm install
-
-    npm run dev
-
-Vite will provide the local frontend URL.
-
----
-
-# ☁️ Deployment
-
-### Frontend
-
-https://vingo-food-delivery-app-1.onrender.com/
-
-### Backend
-
-https://vingo-food-delivery-app-gwsn.onrender.com/
-
-The project is deployed using Render.
-
----
-
-# 🧪 Complete Delivery Test
-
-    1. Customer signs in
-           ↓
-    2. Customer places order
-           ↓
-    3. Owner receives order
-           ↓
-    4. Owner updates order
-           ↓
-    5. Owner marks "Out for Delivery"
-           ↓
-    6. Delivery assignment created
-           ↓
-    7. Delivery Boy receives assignment
-           ↓
-    8. Delivery Boy accepts order
-           ↓
-    9. Delivery Boy clicks "Mark As Delivered"
-           ↓
-    10. OTP generated
-           ↓
-    11. OTP sent to customer
-           ↓
-    12. Delivery Boy enters OTP
-           ↓
-    13. OTP verified
-           ↓
-    14. Shop Order = delivered
-           ↓
-    15. Delivery Assignment = completed
-
----
-
-# 🎯 Engineering Highlights
-
-This project demonstrates:
-
-- REST API development
-- JWT authentication
-- Role-based authorization
-- Firebase authentication
-- MongoDB & Mongoose relationships
-- React component architecture
-- Redux Toolkit
-- Axios API integration
-- Socket.IO real-time communication
-- Razorpay payment integration
-- Cloudinary image management
-- Transactional email API
-- Location-based restaurant discovery
-- City-based filtering
-- Default restaurant fallback
-- OTP-based delivery verification
-- Order state management
-- Delivery assignment management
-- Production deployment with Render
-
----
-
-# 🚧 Future Improvements
-
-- 📍 Real nearby restaurant discovery
-- 🗺️ Live delivery tracking
-- 🛵 Delivery route optimization
-- 🔔 Push notifications
-- 🎟️ Coupon and discount system
-- 🧾 Invoice generation
-- 📊 Restaurant analytics
-- 💰 Delivery partner earnings
-- 🛡️ Admin dashboard
-- 🔄 Order cancellation and refund workflow
-- 🤖 Personalized food recommendations
-- ⚡ API caching
-- 📄 Pagination
-- 🧪 Automated testing
-- 🔁 CI/CD pipeline
-
----
-
-# ⭐ Support
-
-If you find this project useful, consider giving the repository a ⭐ on GitHub.
-
----
-
-
+```
+
+<br>
+
+## 🔌 API Reference
+
+<details>
+<summary><strong>🔐 Authentication</strong></summary>
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/auth/signup` | Register a new user |
+| `POST` | `/api/auth/signin` | Log in |
+| `POST` | `/api/auth/logout` | Log out |
+| `POST` | `/api/auth/send-otp` | Send verification OTP |
+| `POST` | `/api/auth/verify-otp` | Verify OTP |
+| `POST` | `/api/auth/reset-password` | Reset password |
+
+</details>
+
+<details>
+<summary><strong>🏪 Shops</strong></summary>
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/shop/create-edit` | Create or update a restaurant |
+| `GET` | `/api/shop/get-my` | Get the logged-in owner's shop |
+| `GET` | `/api/shop/get-by-city/:city` | Get shops in a city |
+
+</details>
+
+<details>
+<summary><strong>🍔 Food Items</strong></summary>
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/item/add-item` | Add a food item |
+| `POST` | `/api/item/edit-item/:itemId` | Edit a food item |
+| `GET` | `/api/item/get-by-id/:itemId` | Get item by ID |
+| `GET` | `/api/item/delete/:itemId` | Delete an item |
+| `GET` | `/api/item/get-by-city/:city` | Get items by city |
+| `GET` | `/api/item/get-by-shop/:shopId` | Get items by shop |
+| `GET` | `/api/item/search-items` | Search food items |
+| `POST` | `/api/item/rating` | Rate a food item |
+
+</details>
+
+<details>
+<summary><strong>📦 Orders</strong></summary>
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/order/place-order` | Place a new order |
+| `POST` | `/api/order/verify-payment` | Verify Razorpay payment |
+| `GET` | `/api/order/my-orders` | Get customer's orders |
+| `PUT` | `/api/order/update-status/:orderId/:shopId` | Update order status |
+| `GET` | `/api/order/delivery-boy-assignment` | Get pending assignments |
+| `POST` | `/api/order/accept-order/:assignmentId` | Accept a delivery |
+| `GET` | `/api/order/current-order` | Get active order |
+| `GET` | `/api/order/get-order-by-id/:orderId` | Get order details |
+| `POST` | `/api/order/send-delivery-otp` | Send delivery OTP |
+| `POST` | `/api/order/verify-delivery-otp` | Verify delivery OTP |
+| `GET` | `/api/order/today-deliveries` | Get today's completed deliveries |
+
+</details>
+
+<br>
+
+## 🗄️ Database Models
+
+**User** — full name · email · password · mobile · role · location · OTP info · socket ID
+Roles: `user` · `owner` · `deliveryBoy`
+
+**Shop** — name · image · owner · city · state · address · food items · default/demo flag
+```json
+{ "name": "Vingo Pizza House", "city": "Jalandhar", "state": "Punjab", "isDefault": false }
+```
+
+**Item** — food name · image · restaurant · category · price · food type · rating
+Categories: `Snacks` `Main Course` `Desserts` `Pizza` `Burgers` `Sandwiches` `South Indian` `North Indian` `Chinese` `Fast Food` `Others`
+Type: `veg` · `non veg`
+
+<br>
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js ≥ 18
+- A MongoDB Atlas connection string
+- API keys for Cloudinary, Razorpay, Brevo, Firebase, and Geoapify (see below)
+
+### 1. Clone the repo
+```bash
+git clone https://github.com/priyanshuguptacoder/Vingo-Food-Delivery-App.git
+cd Vingo-Food-Delivery-App
+```
+
+### 2. Set up the backend
+```bash
+cd backend
+npm install
+cp .env.example .env   # fill in your values — see Environment Variables below
+npm run dev
+```
+Runs at `http://localhost:8000`
+
+### 3. Set up the frontend
+```bash
+cd frontend
+npm install
+cp .env.example .env
+npm run dev
+```
+Vite will print your local dev URL in the terminal.
+
+<br>
+
+## ⚙️ Environment Variables
+
+**`backend/.env`**
+```env
+PORT=8000
+MONGODB_URL=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+EMAIL=your_verified_sender_email
+BREVO_API_KEY=your_brevo_api_key
+CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+RAZORPAY_KEY_ID=your_razorpay_key_id
+RAZORPAY_KEY_SECRET=your_razorpay_key_secret
+```
+
+**`frontend/.env`**
+```env
+VITE_FIREBASE_APIKEY=your_firebase_api_key
+VITE_GEOAPIKEY=your_geoapify_api_key
+```
+
+> ⚠️ **Never commit `.env` files or secrets.** Keep API keys, database credentials, and JWT secrets out of version control — set them as environment variables locally and in your deployment platform (e.g. Render's dashboard).
+
+<br>
+
+## ☁️ Deployment
+
+| Service | URL |
+|---|---|
+| 🚀 Frontend | [vingo-food-delivery-app-1.onrender.com](https://vingo-food-delivery-app-1.onrender.com/) |
+| ⚙️ Backend | [vingo-food-delivery-app-gwsn.onrender.com](https://vingo-food-delivery-app-gwsn.onrender.com/) |
+
+Both services are deployed on **Render**, with environment variables managed via the Render dashboard.
+
+<br>
+
+## 🎯 Engineering Highlights
+
+- REST API design with clear controller/route separation
+- JWT authentication with role-based authorization (`user` / `owner` / `deliveryBoy`)
+- Firebase-backed Google OAuth alongside traditional auth
+- MongoDB/Mongoose schema relationships across users, shops, items, and orders
+- Real-time updates via Socket.IO (orders, assignments, location)
+- Razorpay integration with server-side payment verification
+- Cloudinary-backed image pipeline via Multer
+- Transactional email delivery via Brevo's HTTP API
+- Location-aware discovery with a graceful demo-data fallback
+- OTP-secured delivery confirmation flow
+- Deployed and running in production on Render
+
+<br>
+
+## 🚧 Roadmap
+
+- [ ] 📍 True nearby-restaurant discovery (radius search)
+- [ ] 🗺️ Live delivery tracking on a map
+- [ ] 🛵 Delivery route optimization
+- [ ] 🔔 Push notifications
+- [ ] 🎟️ Coupons & discounts
+- [ ] 🧾 Invoice generation
+- [ ] 📊 Restaurant analytics dashboard
+- [ ] 💰 Delivery partner earnings tracking
+- [ ] 🛡️ Admin dashboard
+- [ ] 🔄 Order cancellation & refunds
+- [ ] 🤖 Personalized recommendations
+- [ ] ⚡ API caching + pagination
+- [ ] 🧪 Automated test suite
+- [ ] 🔁 CI/CD pipeline
+
+<br>
+
+## 🤝 Contributing
+
+Contributions are welcome. To propose a change:
+
+```bash
+1. Fork the repository
+2. Create a feature branch    → git checkout -b feature/your-feature
+3. Commit your changes        → git commit -m "Add your feature"
+4. Push to your branch        → git push origin feature/your-feature
+5. Open a Pull Request
+```
+
+<br>
+
+## 📄 License
+
+This project is licensed under the **MIT License**. See [`LICENSE`](./LICENSE) for details.
+
+<br>
+
+<div align="center">
+
+### ⭐ If you find Vingo useful, consider starring the repo — it genuinely helps!
+
+</div>
