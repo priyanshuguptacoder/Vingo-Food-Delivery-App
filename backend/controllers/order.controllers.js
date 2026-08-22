@@ -508,28 +508,64 @@ export const sendDeliveryOtp = async (req, res) => {
 export const verifyDeliveryOtp = async (req, res) => {
     try {
         const { orderId, shopOrderId, otp } = req.body
+
         const order = await Order.findById(orderId).populate("user")
-        const shopOrder = order.shopOrders.id(shopOrderId)
-        if (!order || !shopOrder) {
-            return res.status(400).json({ message: "enter valid order/shopOrderid" })
+
+        if (!order) {
+            return res.status(400).json({
+                message: "Order not found"
+            })
         }
-        if (shopOrder.deliveryOtp !== otp || !shopOrder.otpExpires || shopOrder.otpExpires < Date.now()) {
-            return res.status(400).json({ message: "Invalid/Expired Otp" })
+
+        const shopOrder = order.shopOrders.id(shopOrderId)
+
+        if (!shopOrder) {
+            return res.status(400).json({
+                message: "Invalid shopOrderId"
+            })
+        }
+
+        if (
+            shopOrder.deliveryOtp !== otp ||
+            !shopOrder.otpExpires ||
+            shopOrder.otpExpires < Date.now()
+        ) {
+            return res.status(400).json({
+                message: "Invalid/Expired Otp"
+            })
+        }
+
+        const assignment = await DeliveryAssignment.findOne({
+            shopOrderId: shopOrder._id,
+            order: order._id,
+            assignedTo: req.userId,
+            status: "assigned"
+        })
+
+        if (!assignment) {
+            return res.status(400).json({
+                message: "Active delivery assignment not found"
+            })
         }
 
         shopOrder.status = "delivered"
         shopOrder.deliveredAt = Date.now()
+        shopOrder.deliveryOtp = null
+        shopOrder.otpExpires = null
+
+        assignment.status = "completed"
+
         await order.save()
-        await DeliveryAssignment.deleteOne({
-            shopOrderId: shopOrder._id,
-            order: order._id,
-            assignedTo: shopOrder.assignedDeliveryBoy
+        await assignment.save()
+
+        return res.status(200).json({
+            message: "Order Delivered Successfully!"
         })
 
-        return res.status(200).json({ message: "Order Delivered Successfully!" })
-
     } catch (error) {
-        return res.status(500).json({ message: `verify delivery otp error ${error}` })
+        return res.status(500).json({
+            message: `verify delivery otp error ${error}`
+        })
     }
 }
 
