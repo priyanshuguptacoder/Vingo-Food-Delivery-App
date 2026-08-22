@@ -113,19 +113,40 @@ const totalEarning=todayDeliveries.reduce((sum,d)=>sum + d.count*ratePerDelivery
       setLoading(false)
     }
   }
-   const verifyOtp=async () => {
+
+  const verifyOtp = async () => {
     setMessage("")
+
     try {
-      const result=await axios.post(`${serverUrl}/api/order/verify-delivery-otp`,{
-        orderId:currentOrder._id,shopOrderId:currentOrder.shopOrder._id,otp
-      },{withCredentials:true})
-    console.log(result.data)
-    setMessage(result.data.message)
-    location.reload()
+        const result = await axios.post(
+            `${serverUrl}/api/order/verify-delivery-otp`,
+            {
+                orderId: currentOrder._id,
+                shopOrderId: currentOrder.shopOrder._id,
+                otp
+            },
+            {
+                withCredentials: true
+            }
+        )
+
+        console.log(result.data)
+
+        setMessage(result.data.message)
+        setCurrentOrder(null)
+        setShowOtpBox(false)
+        setOtp("")
+
+        await getAssignments()
+        await handleTodayDeliveries()
+
     } catch (error) {
-      console.log(error)
+        console.log(
+            "VERIFY OTP ERROR:",
+            error.response?.data || error.message
+        )
     }
-  }
+}
 
 
    const handleTodayDeliveries=async () => {
