@@ -765,6 +765,4 @@ If you find this project useful, consider giving the repository a ⭐ on GitHub.
 
 ---
 
-# 🍔 Vingo
 
-### Discover food. Order faster. Deliver smarter.
