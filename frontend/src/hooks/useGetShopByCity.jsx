@@ -1,25 +1,41 @@
-import axios from 'axios'
-import React, { useEffect } from 'react'
-import { serverUrl } from '../App'
-import { useDispatch, useSelector } from 'react-redux'
-import { setShopsInMyCity, setUserData } from '../redux/userSlice'
+import axios from "axios"
+import React, { useEffect } from "react"
+import { serverUrl } from "../App"
+import { useDispatch, useSelector } from "react-redux"
+import { setShopsInMyCity } from "../redux/userSlice"
 
 function useGetShopByCity() {
-    const dispatch=useDispatch()
-    const {currentCity}=useSelector(state=>state.user)
-  useEffect(()=>{
-  const fetchShops=async () => {
-    try {
-           const result=await axios.get(`${serverUrl}/api/shop/get-by-city/${currentCity}`,{withCredentials:true})
-            dispatch(setShopsInMyCity(result.data))
-           console.log(result.data)
-    } catch (error) {
-        console.log(error)
-    }
-}
-fetchShops()
- 
-  },[currentCity])
+    const dispatch = useDispatch()
+    const { currentCity } = useSelector(state => state.user)
+
+    useEffect(() => {
+        const fetchShops = async () => {
+            try {
+                const city = currentCity?.trim() || "NoCity"
+
+                const result = await axios.get(
+                    `${serverUrl}/api/shop/get-by-city/${encodeURIComponent(city)}`,
+                    {
+                        withCredentials: true
+                    }
+                )
+
+                dispatch(setShopsInMyCity(result.data))
+
+                console.log("Shops:", result.data)
+
+            } catch (error) {
+                console.log(
+                    "FETCH SHOPS ERROR:",
+                    error.response?.data || error.message
+                )
+            }
+        }
+
+        fetchShops()
+    }, [currentCity])
+
+    return null
 }
 
 export default useGetShopByCity
