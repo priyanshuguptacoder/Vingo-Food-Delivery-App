@@ -15,7 +15,9 @@ function useGetCity() {
 
     useEffect(() => {
         if (!navigator.geolocation) {
-            console.log("Geolocation is not supported")
+            alert(
+                "Location is not supported by your browser. Showing recommended restaurants."
+            )
             return
         }
 
@@ -41,7 +43,9 @@ function useGetCity() {
                     const location = result?.data?.results?.[0]
 
                     if (!location) {
-                        console.log("Location details not found")
+                        alert(
+                            "Unable to detect your location. Showing recommended restaurants."
+                        )
                         return
                     }
 
@@ -58,7 +62,14 @@ function useGetCity() {
                         location.address_line1 ||
                         ""
 
-                    dispatch(setCurrentCity(city || ""))
+                    if (!city) {
+                        alert(
+                            "Unable to determine your city. Showing recommended restaurants."
+                        )
+                        return
+                    }
+
+                    dispatch(setCurrentCity(city))
                     dispatch(setCurrentState(state))
                     dispatch(setCurrentAddress(address))
                     dispatch(setAddress(address))
@@ -72,14 +83,38 @@ function useGetCity() {
                         "Reverse geocoding error:",
                         error
                     )
+
+                    alert(
+                        "Unable to fetch your location. Showing recommended restaurants."
+                    )
                 }
             },
+
             (error) => {
-                console.log(
+                console.error(
                     "Location permission/error:",
-                    error.message
+                    error
                 )
+
+                if (error.code === 1) {
+                    alert(
+                        "Location access is disabled. Showing recommended restaurants."
+                    )
+                } else if (error.code === 2) {
+                    alert(
+                        "Your location could not be determined. Showing recommended restaurants."
+                    )
+                } else if (error.code === 3) {
+                    alert(
+                        "Location request timed out. Showing recommended restaurants."
+                    )
+                } else {
+                    alert(
+                        "Unable to fetch your location. Showing recommended restaurants."
+                    )
+                }
             },
+
             {
                 enableHighAccuracy: true,
                 timeout: 10000,
