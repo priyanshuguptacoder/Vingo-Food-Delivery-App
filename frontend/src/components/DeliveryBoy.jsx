@@ -83,14 +83,21 @@ const totalEarning=todayDeliveries.reduce((sum,d)=>sum + d.count*ratePerDelivery
     }
   }
 
-  useEffect(()=>{
-    socket.on('newAssignment',(data)=>{
-      setAvailableAssignments(prev=>([...prev,data]))
-    })
-    return ()=>{
-      socket.off('newAssignment')
+  useEffect(() => {
+    if (!socket) return
+
+    const handleNewAssignment = (data) => {
+        setAvailableAssignments(prev =>
+            prev ? [...prev, data] : [data]
+        )
     }
-  },[socket])
+
+    socket.on("newAssignment", handleNewAssignment)
+
+    return () => {
+        socket.off("newAssignment", handleNewAssignment)
+    }
+}, [socket])
   
   const sendOtp=async () => {
     setLoading(true)
