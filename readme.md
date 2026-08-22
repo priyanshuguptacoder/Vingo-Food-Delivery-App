@@ -741,7 +741,7 @@ This project demonstrates:
 
 ---
 
-# 👨‍💻 Author
+# 👨‍💻 Contributors
 
 ## Priyanshu Gupta
 
@@ -754,8 +754,18 @@ https://github.com/priyanshuguptacoder
 LinkedIn:  
 https://www.linkedin.com/in/priyanshu-gupta-b98689376/
 
-LeetCode:  
-https://leetcode.com/u/invisiblemanfromheart/
+## Vansh Joshi
+
+**Computer Science & Engineering**  
+**NIT Jalandhar**
+
+GitHub:  
+https://github.com/vanshjcs25-sketch
+
+LinkedIn:  
+https://www.linkedin.com/in/vansh-joshi-10b659376/
+
+
 
 ---
 
