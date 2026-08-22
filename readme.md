@@ -741,34 +741,6 @@ This project demonstrates:
 
 ---
 
-# 👨‍💻 Contributors
-
-## Priyanshu Gupta
-
-**Computer Science & Engineering**  
-**NIT Jalandhar**
-
-GitHub:  
-https://github.com/priyanshuguptacoder
-
-LinkedIn:  
-https://www.linkedin.com/in/priyanshu-gupta-b98689376/
-
-## Vansh Joshi
-
-**Computer Science & Engineering**  
-**NIT Jalandhar**
-
-GitHub:  
-https://github.com/vanshjcs25-sketch
-
-LinkedIn:  
-https://www.linkedin.com/in/vansh-joshi-10b659376/
-
-
-
----
-
 # ⭐ Support
 
 If you find this project useful, consider giving the repository a ⭐ on GitHub.
