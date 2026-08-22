@@ -2,187 +2,428 @@ import Item from "../models/item.model.js";
 import Shop from "../models/shop.model.js";
 import uploadOnCloudinary from "../utils/cloudinary.js";
 
+
 export const addItem = async (req, res) => {
     try {
-        const { name, category, foodType, price } = req.body
-        let image;
-        if (req.file) {
-            image = await uploadOnCloudinary(req.file.path)
-        }
-        const shop = await Shop.findOne({ owner: req.userId })
-        if (!shop) {
-            return res.status(400).json({ message: "shop not found" })
-        }
-        const item = await Item.create({
-            name, category, foodType, price, image, shop: shop._id
-        })
+        const { name, category, foodType, price } = req.body;
 
-        shop.items.push(item._id)
-        await shop.save()
-        await shop.populate("owner")
+        let image;
+
+        if (req.file) {
+            image = await uploadOnCloudinary(req.file.path);
+        }
+
+        const shop = await Shop.findOne({
+            owner: req.userId
+        });
+
+        if (!shop) {
+            return res.status(400).json({
+                message: "shop not found"
+            });
+        }
+
+        const item = await Item.create({
+            name,
+            category,
+            foodType,
+            price,
+            image,
+            shop: shop._id
+        });
+
+        shop.items.push(item._id);
+
+        await shop.save();
+
+        await shop.populate("owner");
+
         await shop.populate({
             path: "items",
-            options: { sort: { updatedAt: -1 } }
-        })
-        return res.status(201).json(shop)
+            options: {
+                sort: {
+                    updatedAt: -1
+                }
+            }
+        });
+
+        return res.status(201).json(shop);
 
     } catch (error) {
-        return res.status(500).json({ message: `add item error ${error}` })
+        console.error("ADD ITEM ERROR:", error);
+
+        return res.status(500).json({
+            message: `add item error ${error.message}`
+        });
     }
-}
+};
+
 
 export const editItem = async (req, res) => {
     try {
-        const itemId = req.params.itemId
-        const { name, category, foodType, price } = req.body
-        let image;
+        const itemId = req.params.itemId;
+
+        const {
+            name,
+            category,
+            foodType,
+            price
+        } = req.body;
+
+        const updateData = {
+            name,
+            category,
+            foodType,
+            price
+        };
+
         if (req.file) {
-            image = await uploadOnCloudinary(req.file.path)
+            updateData.image =
+                await uploadOnCloudinary(req.file.path);
         }
-        const item = await Item.findByIdAndUpdate(itemId, {
-            name, category, foodType, price, image
-        }, { new: true })
+
+        const item = await Item.findByIdAndUpdate(
+            itemId,
+            updateData,
+            {
+                new: true
+            }
+        );
+
         if (!item) {
-            return res.status(400).json({ message: "item not found" })
+            return res.status(400).json({
+                message: "item not found"
+            });
         }
-        const shop = await Shop.findOne({ owner: req.userId }).populate({
+
+        const shop = await Shop.findOne({
+            owner: req.userId
+        }).populate({
             path: "items",
-            options: { sort: { updatedAt: -1 } }
-        })
-        return res.status(200).json(shop)
+            options: {
+                sort: {
+                    updatedAt: -1
+                }
+            }
+        });
+
+        return res.status(200).json(shop);
 
     } catch (error) {
-        return res.status(500).json({ message: `edit item error ${error}` })
+        console.error("EDIT ITEM ERROR:", error);
+
+        return res.status(500).json({
+            message: `edit item error ${error.message}`
+        });
     }
-}
+};
+
 
 export const getItemById = async (req, res) => {
     try {
-        const itemId = req.params.itemId
-        const item = await Item.findById(itemId)
+        const itemId = req.params.itemId;
+
+        const item = await Item.findById(itemId);
+
         if (!item) {
-            return res.status(400).json({ message: "item not found" })
+            return res.status(400).json({
+                message: "item not found"
+            });
         }
-        return res.status(200).json(item)
+
+        return res.status(200).json(item);
+
     } catch (error) {
-        return res.status(500).json({ message: `get item error ${error}` })
+        console.error("GET ITEM ERROR:", error);
+
+        return res.status(500).json({
+            message: `get item error ${error.message}`
+        });
     }
-}
+};
+
 
 export const deleteItem = async (req, res) => {
     try {
-        const itemId = req.params.itemId
-        const item = await Item.findByIdAndDelete(itemId)
+        const itemId = req.params.itemId;
+
+        const item = await Item.findByIdAndDelete(itemId);
+
         if (!item) {
-            return res.status(400).json({ message: "item not found" })
+            return res.status(400).json({
+                message: "item not found"
+            });
         }
-        const shop = await Shop.findOne({ owner: req.userId })
-        shop.items = shop.items.filter(i => i !== item._id)
-        await shop.save()
-        await shop.populate({
-            path: "items",
-            options: { sort: { updatedAt: -1 } }
-        })
-        return res.status(200).json(shop)
+
+        const shop = await Shop.findOne({
+            owner: req.userId
+        });
+
+        if (shop) {
+            shop.items = shop.items.filter(
+                id => String(id) !== String(item._id)
+            );
+
+            await shop.save();
+
+            await shop.populate({
+                path: "items",
+                options: {
+                    sort: {
+                        updatedAt: -1
+                    }
+                }
+            });
+        }
+
+        return res.status(200).json(shop);
 
     } catch (error) {
-        return res.status(500).json({ message: `delete item error ${error}` })
+        console.error("DELETE ITEM ERROR:", error);
+
+        return res.status(500).json({
+            message: `delete item error ${error.message}`
+        });
     }
-}
+};
+
 
 export const getItemByCity = async (req, res) => {
     try {
-        const { city } = req.params
-        if (!city) {
-            return res.status(400).json({ message: "city is required" })
-        }
-        const shops = await Shop.find({
-            city: { $regex: new RegExp(`^${city}$`, "i") }
-        }).populate('items')
-        if (!shops) {
-            return res.status(400).json({ message: "shops not found" })
-        }
-        const shopIds=shops.map((shop)=>shop._id)
+        const { city } = req.params;
 
-        const items=await Item.find({shop:{$in:shopIds}})
-        return res.status(200).json(items)
+        if (
+            !city ||
+            city === "null" ||
+            city === "undefined"
+        ) {
+            return res.status(400).json({
+                message: "valid city is required"
+            });
+        }
+
+        // First search for real shops in the requested city
+        let shops = await Shop.find({
+            city: {
+                $regex: new RegExp(
+                    `^${city.trim()}$`,
+                    "i"
+                )
+            }
+        });
+
+        // If no shops exist, use default demo shops
+        if (shops.length === 0) {
+            shops = await Shop.find({
+                isDefault: true
+            });
+        }
+
+        const shopIds = shops.map(
+            shop => shop._id
+        );
+
+        // Get items belonging to those shops
+        const items = await Item.find({
+            shop: {
+                $in: shopIds
+            }
+        });
+
+        return res.status(200).json(items);
 
     } catch (error) {
- return res.status(500).json({ message: `get item by city error ${error}` })
-    }
-}
+        console.error(
+            "GET ITEM BY CITY ERROR:",
+            error
+        );
 
-export const getItemsByShop=async (req,res) => {
+        return res.status(500).json({
+            message:
+                `get item by city error ${error.message}`
+        });
+    }
+};
+
+
+export const getItemsByShop = async (req, res) => {
     try {
-        const {shopId}=req.params
-        const shop=await Shop.findById(shopId).populate("items")
-        if(!shop){
-            return res.status(400).json("shop not found")
+        const { shopId } = req.params;
+
+        const shop = await Shop.findById(
+            shopId
+        ).populate("items");
+
+        if (!shop) {
+            return res.status(400).json({
+                message: "shop not found"
+            });
         }
+
         return res.status(200).json({
-            shop,items:shop.items
-        })
-    } catch (error) {
-         return res.status(500).json({ message: `get item by shop error ${error}` })
-    }
-}
+            shop,
+            items: shop.items
+        });
 
-export const searchItems=async (req,res) => {
+    } catch (error) {
+        console.error(
+            "GET ITEM BY SHOP ERROR:",
+            error
+        );
+
+        return res.status(500).json({
+            message:
+                `get item by shop error ${error.message}`
+        });
+    }
+};
+
+
+export const searchItems = async (req, res) => {
     try {
-        const {query,city}=req.query
-        if(!query || !city){
-            return null
+        const {
+            query,
+            city
+        } = req.query;
+
+        if (!query || !city) {
+            return res.status(400).json({
+                message:
+                    "query and city are required"
+            });
         }
-        const shops=await Shop.find({
-            city:{$regex:new RegExp(`^${city}$`, "i")}
-        }).populate('items')
-        if(!shops){
-            return res.status(400).json({message:"shops not found"})
+
+        let shops = await Shop.find({
+            city: {
+                $regex: new RegExp(
+                    `^${city.trim()}$`,
+                    "i"
+                )
+            }
+        });
+
+        // Fallback to demo shops
+        if (shops.length === 0) {
+            shops = await Shop.find({
+                isDefault: true
+            });
         }
-        const shopIds=shops.map(s=>s._id)
-        const items=await Item.find({
-            shop:{$in:shopIds},
-            $or:[
-              {name:{$regex:query,$options:"i"}},
-              {category:{$regex:query,$options:"i"}}  
+
+        const shopIds = shops.map(
+            shop => shop._id
+        );
+
+        const items = await Item.find({
+            shop: {
+                $in: shopIds
+            },
+            $or: [
+                {
+                    name: {
+                        $regex: query,
+                        $options: "i"
+                    }
+                },
+                {
+                    category: {
+                        $regex: query,
+                        $options: "i"
+                    }
+                }
             ]
+        }).populate(
+            "shop",
+            "name image city"
+        );
 
-        }).populate("shop","name image")
-
-        return res.status(200).json(items)
+        return res.status(200).json(items);
 
     } catch (error) {
-         return res.status(500).json({ message: `search item  error ${error}` })
+        console.error(
+            "SEARCH ITEM ERROR:",
+            error
+        );
+
+        return res.status(500).json({
+            message:
+                `search item error ${error.message}`
+        });
     }
-}
+};
 
 
-export const rating=async (req,res) => {
+export const rating = async (req, res) => {
     try {
-        const {itemId,rating}=req.body
+        const {
+            itemId,
+            rating: userRating
+        } = req.body;
 
-        if(!itemId || !rating){
-            return res.status(400).json({message:"itemId and rating is required"})
+        if (!itemId || userRating == null) {
+            return res.status(400).json({
+                message:
+                    "itemId and rating is required"
+            });
         }
 
-        if(rating<1 || rating>5){
-             return res.status(400).json({message:"rating must be between 1 to 5"})
+        if (
+            userRating < 1 ||
+            userRating > 5
+        ) {
+            return res.status(400).json({
+                message:
+                    "rating must be between 1 to 5"
+            });
         }
 
-        const item=await Item.findById(itemId)
-        if(!item){
-              return res.status(400).json({message:"item not found"})
+        const item = await Item.findById(
+            itemId
+        );
+
+        if (!item) {
+            return res.status(400).json({
+                message: "item not found"
+            });
         }
 
-        const newCount=item.rating.count + 1
-        const newAverage=(item.rating.average*item.rating.count + rating)/newCount
+        const oldCount =
+            item.rating?.count || 0;
 
-        item.rating.count=newCount
-        item.rating.average=newAverage
-        await item.save()
-return res.status(200).json({rating:item.rating})
+        const oldAverage =
+            item.rating?.average || 0;
+
+        const newCount =
+            oldCount + 1;
+
+        const newAverage =
+            (
+                oldAverage * oldCount +
+                Number(userRating)
+            ) / newCount;
+
+        item.rating.count =
+            newCount;
+
+        item.rating.average =
+            Number(
+                newAverage.toFixed(1)
+            );
+
+        await item.save();
+
+        return res.status(200).json({
+            rating: item.rating
+        });
 
     } catch (error) {
-         return res.status(500).json({ message: `rating error ${error}` })
+        console.error(
+            "RATING ERROR:",
+            error
+        );
+
+        return res.status(500).json({
+            message:
+                `rating error ${error.message}`
+        });
     }
-}
+};
