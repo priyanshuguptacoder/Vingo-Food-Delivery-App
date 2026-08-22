@@ -509,7 +509,13 @@ export const verifyDeliveryOtp = async (req, res) => {
     try {
         const { orderId, shopOrderId, otp } = req.body
 
-        const order = await Order.findById(orderId).populate("user")
+        if (!orderId || !shopOrderId || !otp) {
+            return res.status(400).json({
+                message: "orderId, shopOrderId and otp are required"
+            })
+        }
+
+        const order = await Order.findById(orderId)
 
         if (!order) {
             return res.status(400).json({
@@ -525,31 +531,40 @@ export const verifyDeliveryOtp = async (req, res) => {
             })
         }
 
+        const enteredOtp = String(otp).trim()
+        const savedOtp = String(shopOrder.deliveryOtp || "").trim()
+
         if (
-            shopOrder.deliveryOtp !== otp ||
+            savedOtp !== enteredOtp ||
             !shopOrder.otpExpires ||
-            shopOrder.otpExpires < Date.now()
+            new Date(shopOrder.otpExpires).getTime() < Date.now()
         ) {
             return res.status(400).json({
-                message: "Invalid/Expired Otp"
+                message: "Invalid or expired OTP"
             })
         }
 
         const assignment = await DeliveryAssignment.findOne({
             shopOrderId: shopOrder._id,
             order: order._id,
-            assignedTo: req.userId,
-            status: "assigned"
+            assignedTo: req.userId
         })
 
         if (!assignment) {
             return res.status(400).json({
-                message: "Active delivery assignment not found"
+                message: "Delivery assignment not found"
+            })
+        }
+
+        if (assignment.status !== "assigned") {
+            return res.status(400).json({
+                message: `Delivery assignment is ${assignment.status}`
             })
         }
 
         shopOrder.status = "delivered"
-        shopOrder.deliveredAt = Date.now()
+        shopOrder.deliveredAt = new Date()
+
         shopOrder.deliveryOtp = null
         shopOrder.otpExpires = null
 
@@ -563,8 +578,11 @@ export const verifyDeliveryOtp = async (req, res) => {
         })
 
     } catch (error) {
+        console.error("VERIFY DELIVERY OTP ERROR:", error)
+
         return res.status(500).json({
-            message: `verify delivery otp error ${error}`
+            message: "Failed to verify delivery OTP",
+            error: error.message
         })
     }
 }
