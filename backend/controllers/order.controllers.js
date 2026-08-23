@@ -64,6 +64,10 @@ export const placeOrder = async (req, res) => {
                     const dbItem = await Item.findById(clientItem.id);
                     if (!dbItem) throw new Error("Item not found");
                     
+                    if (dbItem.shop.toString() !== shopId.toString()) {
+                        throw new Error(`Item ${dbItem.name} does not belong to the selected shop`);
+                    }
+                    
                     const quantity = Number(clientItem.quantity);
                     if (isNaN(quantity) || quantity <= 0) throw new Error("Invalid quantity");
                     
@@ -183,6 +187,18 @@ export const verifyPayment = async (req, res) => {
         if (!order) {
             return res.status(400).json({
                 message: "order not found"
+            })
+        }
+
+        if (order.user.toString() !== req.userId.toString()) {
+            return res.status(403).json({
+                message: "unauthorized order access"
+            })
+        }
+
+        if (payment.order_id !== order.razorpayOrderId) {
+            return res.status(400).json({
+                message: "payment does not match this order"
             })
         }
 
