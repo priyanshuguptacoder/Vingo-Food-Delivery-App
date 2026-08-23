@@ -2,6 +2,7 @@ import DeliveryAssignment from "../models/deliveryAssignment.model.js"
 import Order from "../models/order.model.js"
 import Shop from "../models/shop.model.js"
 import User from "../models/user.model.js"
+import Item from "../models/item.model.js"
 import { sendDeliveryOtpMail } from "../utils/mail.js"
 import RazorPay from "razorpay"
 import dotenv from "dotenv"
@@ -36,7 +37,8 @@ export const placeOrder = async (req, res) => {
         const groupItemsByShop = {}
 
         cartItems.forEach(item => {
-            const shopId = item.shop
+            // Handle populated shop object vs string ID
+            const shopId = item.shop?._id ? item.shop._id.toString() : item.shop.toString()
 
             if (!groupItemsByShop[shopId]) {
                 groupItemsByShop[shopId] = []
@@ -44,6 +46,8 @@ export const placeOrder = async (req, res) => {
 
             groupItemsByShop[shopId].push(item)
         })
+
+        let serverTotalAmount = 0;
 
         const shopOrders = await Promise.all(
             Object.keys(groupItemsByShop).map(async (shopId) => {
@@ -54,31 +58,39 @@ export const placeOrder = async (req, res) => {
                 }
 
                 const items = groupItemsByShop[shopId]
-
-                const subtotal = items.reduce(
-                    (sum, item) =>
-                        sum +
-                        Number(item.price) * Number(item.quantity),
-                    0
-                )
+                let subtotal = 0;
+                
+                const shopOrderItems = await Promise.all(items.map(async (clientItem) => {
+                    const dbItem = await Item.findById(clientItem.id);
+                    if (!dbItem) throw new Error("Item not found");
+                    
+                    const quantity = Number(clientItem.quantity);
+                    if (isNaN(quantity) || quantity <= 0) throw new Error("Invalid quantity");
+                    
+                    subtotal += dbItem.price * quantity;
+                    
+                    return {
+                        item: dbItem._id,
+                        name: dbItem.name,
+                        price: dbItem.price,
+                        quantity: quantity
+                    };
+                }));
+                
+                serverTotalAmount += subtotal;
 
                 return {
                     shop: shop._id,
-                    owner: shop.owner._id,
+                    owner: shop.owner ? shop.owner._id : null,
                     subtotal,
-                    shopOrderItems: items.map(item => ({
-                        item: item.id,
-                        price: item.price,
-                        quantity: item.quantity,
-                        name: item.name
-                    }))
+                    shopOrderItems
                 }
             })
         )
 
         if (paymentMethod === "online") {
             const razorOrder = await instance.orders.create({
-                amount: Math.round(totalAmount * 100),
+                amount: Math.round(serverTotalAmount * 100),
                 currency: "INR",
                 receipt: `receipt_${Date.now()}`
             })
@@ -87,7 +99,7 @@ export const placeOrder = async (req, res) => {
                 user: req.userId,
                 paymentMethod,
                 deliveryAddress,
-                totalAmount,
+                totalAmount: serverTotalAmount,
                 shopOrders,
                 razorpayOrderId: razorOrder.id,
                 payment: false
@@ -103,7 +115,7 @@ export const placeOrder = async (req, res) => {
             user: req.userId,
             paymentMethod,
             deliveryAddress,
-            totalAmount,
+            totalAmount: serverTotalAmount,
             shopOrders
         })
 
