@@ -202,6 +202,10 @@ export const verifyPayment = async (req, res) => {
             })
         }
 
+        if (order.payment) {
+            return res.status(200).json(order)
+        }
+
         order.payment = true
         order.razorpayPaymentId = razorpay_payment_id
 
