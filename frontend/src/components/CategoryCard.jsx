@@ -1,11 +1,11 @@
 import React from 'react'
 
-function CategoryCard({name,image,onClick}) {
+function CategoryCard({name, image, onClick}) {
   return (
-    <div className='w-[120px] h-[120px] md:w-[180px] md:h-[180px] rounded-2xl border-2 border-[#ff4d2d] shrink-0 overflow-hidden bg-white shadow-xl shadow-gray-200 hover:shadow-lg transition-shadow relative' onClick={onClick}>
-     <img src={image} alt="" className=' w-full h-full object-cover transform hover:scale-110 transition-transform duration-300'/>
-     <div className='absolute  bottom-0 w-full left-0  bg-[#ffffff96] bg-opacity-95 px-3 py-1 rounded-t-xl text-center shadow text-sm font-medium text-gray-800 backdrop-blur'>
-{name}
+    <div className='w-[120px] h-[120px] md:w-[160px] md:h-[160px] rounded-2xl border border-gray-100 shrink-0 overflow-hidden bg-white shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative group cursor-pointer' onClick={onClick}>
+     <img src={image} alt={name} className='w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500'/>
+     <div className='absolute bottom-0 w-full left-0 bg-gradient-to-t from-black/80 to-transparent pt-6 pb-2 px-3 text-center'>
+       <p className='text-sm font-semibold text-white truncate shadow-sm'>{name}</p>
      </div>
     </div>
   )
