@@ -94,7 +94,7 @@ function SignIn() {
 
                 <button className='w-full flex items-center justify-center gap-3 border border-gray-200 rounded-xl px-4 py-3 font-semibold text-gray-700 transition-all duration-300 hover:bg-gray-50 hover:shadow-sm active:scale-[0.98] cursor-pointer' onClick={handleGoogleAuth}>
                     <FcGoogle size={22} />
-                    <span>Sign in with Google</span>
+                    <span>Sign In with Google</span>
                 </button>
 
                 <p className='text-center mt-8 text-gray-600 font-medium'>

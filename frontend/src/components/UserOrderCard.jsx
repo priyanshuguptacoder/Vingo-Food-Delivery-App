@@ -71,7 +71,7 @@ function UserOrderCard({ data }) {
                 {data.shopOrders.map((shopOrder, index) => (
                     <div className='border border-gray-100 rounded-2xl p-5 bg-gray-50/50 space-y-4' key={index}>
                         <div className='flex justify-between items-center border-b border-gray-200 pb-3'>
-                            <h3 className='font-bold text-gray-900 text-lg'>{shopOrder.shop.name}</h3>
+                            <h3 className='font-bold text-gray-900 text-lg capitalize'>{shopOrder.shop.name}</h3>
                             <span className={`px-3 py-1 rounded-full text-xs font-bold border uppercase tracking-wider ${getStatusColor(shopOrder.status)}`}>
                                 {shopOrder.status}
                             </span>
@@ -83,7 +83,7 @@ function UserOrderCard({ data }) {
                                     <div className='w-full h-28 rounded-lg overflow-hidden mb-3 bg-gray-50'>
                                         <img src={item.item.image} alt={item.name} className='w-full h-full object-cover hover:scale-105 transition-transform' />
                                     </div>
-                                    <p className='text-sm font-bold text-gray-900 truncate' title={item.name}>{item.name}</p>
+                                    <p className='text-sm font-bold text-gray-900 truncate capitalize' title={item.name}>{item.name}</p>
                                     <p className='text-xs font-medium text-gray-500 mt-1 mb-2'>Qty: {item.quantity} × ₹{item.price}</p>
                                     
                                     <div className='mt-auto pt-2 border-t border-gray-100 flex items-center justify-between'>

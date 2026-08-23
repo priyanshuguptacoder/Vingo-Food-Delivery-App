@@ -75,7 +75,7 @@ function OwnerOrderCard({ data }) {
                             <div className='w-full h-24 rounded-lg overflow-hidden mb-3 bg-gray-50'>
                                 <img src={item.item.image} alt={item.name} className='w-full h-full object-cover hover:scale-105 transition-transform' />
                             </div>
-                            <p className='text-sm font-bold text-gray-900 truncate' title={item.name}>{item.name}</p>
+                            <p className='text-sm font-bold text-gray-900 truncate capitalize' title={item.name}>{item.name}</p>
                             
                             <div className='mt-auto pt-2 flex items-center justify-between'>
                                 <p className='text-xs font-medium text-gray-500'>Qty: {item.quantity}</p>
