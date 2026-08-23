@@ -6,10 +6,14 @@ import { useNavigate } from 'react-router-dom';
 import { serverUrl } from '../App';
 import { useDispatch } from 'react-redux';
 import { setMyShopData } from '../redux/ownerSlice';
+import { getFoodImage } from '../utils/imageMapping';
 
 function OwnerItemCard({data}) {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    
+    // Check if image is an SVG or data URL, replace with our mapping
+    const finalImage = (data.image && (data.image.startsWith('data:image/svg+xml') || data.image.includes('<svg'))) ? getFoodImage(data.name) : (data.image || getFoodImage(data.name));
     
     const handleDelete = async () => {
       try {
@@ -23,7 +27,7 @@ function OwnerItemCard({data}) {
   return (
     <div className='flex bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow overflow-hidden border border-gray-100 w-full max-w-2xl'>
       <div className='w-36 h-36 flex-shrink-0 bg-gray-50'>
-        <img src={data.image} alt={data.name} className='w-full h-full object-cover'/>
+        <img src={finalImage} alt={data.name} className='w-full h-full object-cover'/>
       </div>
       <div className='flex flex-col justify-between p-4 flex-1'>
           <div>

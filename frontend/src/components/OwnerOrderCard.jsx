@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { updateOrderStatus } from '../redux/userSlice';
 import { useState } from 'react';
 import { IoLocationOutline } from "react-icons/io5";
+import { getFoodImage } from '../utils/imageMapping';
 
 function OwnerOrderCard({ data }) {
     const [availableBoys, setAvailableBoys] = useState([])
@@ -73,7 +74,7 @@ function OwnerOrderCard({ data }) {
                     {data.shopOrders.shopOrderItems.map((item, index) => (
                         <div key={index} className='flex-shrink-0 w-[160px] border border-gray-100 rounded-xl p-3 bg-white shadow-sm flex flex-col'>
                             <div className='w-full h-24 rounded-lg overflow-hidden mb-3 bg-gray-50'>
-                                <img src={item.item.image} alt={item.name} className='w-full h-full object-cover hover:scale-105 transition-transform' />
+                                <img src={item.item.image && (item.item.image.startsWith('data:image/svg+xml') || item.item.image.includes('<svg')) ? getFoodImage(item.name) : (item.item.image || getFoodImage(item.name))} alt={item.name} className='w-full h-full object-cover hover:scale-105 transition-transform' />
                             </div>
                             <p className='text-sm font-bold text-gray-900 truncate capitalize' title={item.name}>{item.name}</p>
                             

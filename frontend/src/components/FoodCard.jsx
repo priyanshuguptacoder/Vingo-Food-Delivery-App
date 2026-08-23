@@ -8,11 +8,15 @@ import { FaPlus } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../redux/userSlice';
+import { getFoodImage } from '../utils/imageMapping';
 
 function FoodCard({ data }) {
     const [quantity, setQuantity] = useState(0)
     const dispatch = useDispatch()
     const { cartItems } = useSelector(state => state.user)
+    
+    // Check if image is an SVG or data URL, replace with our mapping
+    const finalImage = (data.image && (data.image.startsWith('data:image/svg+xml') || data.image.includes('<svg'))) ? getFoodImage(data.name) : (data.image || getFoodImage(data.name));
     
     const renderStars = (rating) => {
         const stars = [];
@@ -45,7 +49,7 @@ function FoodCard({ data }) {
                     {data.foodType === "veg" ? <FaLeaf className='text-green-600 text-sm' /> : <FaDrumstickBite className='text-red-600 text-sm' />}
                 </div>
 
-                <img src={data.image} alt={data.name} className='w-full h-full object-cover transition-transform duration-500 group-hover:scale-110' />
+                <img src={finalImage} alt={data.name} className='w-full h-full object-cover transition-transform duration-500 group-hover:scale-110' />
             </div>
 
             <div className="flex-1 flex flex-col p-4">

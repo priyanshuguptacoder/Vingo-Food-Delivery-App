@@ -5,6 +5,7 @@ import { FaUtensils } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import { FaPen } from "react-icons/fa";
 import OwnerItemCard from './OwnerItemCard';
+import { getShopImage } from '../utils/imageMapping';
 
 function OwnerDashboard() {
   const { myShopData } = useSelector(state => state.owner)
@@ -45,7 +46,7 @@ function OwnerDashboard() {
               <FaPen size={18}/>
             </div>
             <div className='w-full h-48 sm:h-72 overflow-hidden'>
-               <img src={myShopData.image} alt={myShopData.name} className='w-full h-full object-cover transition-transform duration-700 group-hover:scale-105'/>
+               <img src={myShopData.image && (myShopData.image.startsWith('data:image/svg+xml') || myShopData.image.includes('<svg')) ? getShopImage(myShopData.name) : (myShopData.image || getShopImage(myShopData.name))} alt={myShopData.name} className='w-full h-full object-cover transition-transform duration-700 group-hover:scale-105'/>
             </div>
             <div className='p-6 sm:p-8 flex flex-col gap-1 relative bg-white'>
               <h2 className='text-2xl sm:text-3xl font-bold text-gray-900 mb-1'>{myShopData.name}</h2>

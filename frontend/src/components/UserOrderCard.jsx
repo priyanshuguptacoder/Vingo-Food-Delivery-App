@@ -5,6 +5,7 @@ import { serverUrl } from '../App'
 import { FaStar } from 'react-icons/fa'
 import { IoLocationOutline } from "react-icons/io5";
 import { TbReceipt } from "react-icons/tb";
+import { getFoodImage } from '../utils/imageMapping';
 
 function UserOrderCard({ data }) {
     const navigate = useNavigate()
@@ -81,7 +82,7 @@ function UserOrderCard({ data }) {
                             {shopOrder.shopOrderItems.map((item, idx) => (
                                 <div key={idx} className='flex-shrink-0 w-[180px] border border-gray-100 rounded-xl p-3 bg-white shadow-sm flex flex-col'>
                                     <div className='w-full h-28 rounded-lg overflow-hidden mb-3 bg-gray-50'>
-                                        <img src={item.item.image} alt={item.name} className='w-full h-full object-cover hover:scale-105 transition-transform' />
+                                        <img src={item.item.image && (item.item.image.startsWith('data:image/svg+xml') || item.item.image.includes('<svg')) ? getFoodImage(item.name) : (item.item.image || getFoodImage(item.name))} alt={item.name} className='w-full h-full object-cover hover:scale-105 transition-transform' />
                                     </div>
                                     <p className='text-sm font-bold text-gray-900 truncate capitalize' title={item.name}>{item.name}</p>
                                     <p className='text-xs font-medium text-gray-500 mt-1 mb-2'>Qty: {item.quantity} × ₹{item.price}</p>

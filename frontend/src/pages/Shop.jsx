@@ -7,6 +7,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { FaUtensils } from "react-icons/fa";
 import FoodCard from '../components/FoodCard';
 import { IoIosArrowRoundBack } from "react-icons/io";
+import { getShopImage } from '../utils/imageMapping';
 
 function Shop() {
     const {shopId} = useParams()
@@ -38,7 +39,7 @@ function Shop() {
         
         {shop && (
             <div className='relative w-full h-[40vh] md:h-[50vh] min-h-[300px]'>
-                <img src={shop.image} alt={shop.name} className='w-full h-full object-cover'/>
+                <img src={shop.image && (shop.image.startsWith('data:image/svg+xml') || shop.image.includes('<svg')) ? getShopImage(shop.name) : (shop.image || getShopImage(shop.name))} alt={shop.name} className='w-full h-full object-cover'/>
                 <div className='absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end px-6 md:px-16 pb-12'>
                     <div className='max-w-7xl w-full mx-auto'>
                         <div className='w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-lg rotate-3'>
