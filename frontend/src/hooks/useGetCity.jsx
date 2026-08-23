@@ -18,6 +18,7 @@ function useGetCity() {
             alert(
                 "Location is not supported by your browser. Showing recommended restaurants."
             )
+            dispatch(setCurrentCity("NoCity"))
             return
         }
 
@@ -46,6 +47,7 @@ function useGetCity() {
                         alert(
                             "Unable to detect your location. Showing recommended restaurants."
                         )
+                        dispatch(setCurrentCity("NoCity"))
                         return
                     }
 
@@ -66,6 +68,7 @@ function useGetCity() {
                         alert(
                             "Unable to determine your city. Showing recommended restaurants."
                         )
+                        dispatch(setCurrentCity("NoCity"))
                         return
                     }
 
@@ -87,6 +90,7 @@ function useGetCity() {
                     alert(
                         "Unable to fetch your location. Showing recommended restaurants."
                     )
+                    dispatch(setCurrentCity("NoCity"))
                 }
             },
 
@@ -113,6 +117,7 @@ function useGetCity() {
                         "Unable to fetch your location. Showing recommended restaurants."
                     )
                 }
+                dispatch(setCurrentCity("NoCity"))
             },
 
             {
