@@ -26,13 +26,11 @@ function CartItemCard({data}) {
     <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between bg-white p-4 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow gap-4'>
       <div className='flex items-center gap-4 w-full sm:w-auto'>
         <div className='w-24 h-24 sm:w-20 sm:h-20 flex-shrink-0 bg-gray-50 rounded-xl overflow-hidden'>
-            <img src={finalImage} alt={data.name} className='w-full h-full object-cover'/>
+            <img src={finalImage} alt={data.name} className='w-full h-full object-cover object-center'/>
         </div>
         <div className='flex-1'>
             <h1 className='font-bold text-gray-900 text-lg mb-0.5 capitalize'>{data.name}</h1>
-            {data.shop?.name && (
-                <p className='text-xs font-semibold text-gray-500 mb-1.5 capitalize'>{data.shop.name}</p>
-            )}
+            <p className='text-xs font-semibold text-gray-500 mb-1.5 capitalize'>{data.shop?.name || 'Vingo'}</p>
             <p className='text-sm text-gray-500 font-medium'>₹{data.price} x {data.quantity}</p>
             <p className="font-extrabold text-[#ff4d2d] text-lg mt-1">₹{data.price * data.quantity}</p>
         </div>

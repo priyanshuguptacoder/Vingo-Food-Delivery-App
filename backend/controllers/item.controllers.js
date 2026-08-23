@@ -228,7 +228,7 @@ export const getItemByCity = async (req, res) => {
             shop: {
                 $in: shopIds
             }
-        });
+        }).populate("shop", "name image city");
 
         return res.status(200).json(items);
 

@@ -49,14 +49,14 @@ function FoodCard({ data }) {
                     {data.foodType === "veg" ? <FaLeaf className='text-green-600 text-sm' /> : <FaDrumstickBite className='text-red-600 text-sm' />}
                 </div>
 
-                <img src={finalImage} alt={data.name} className='w-full h-full object-cover transition-transform duration-500 group-hover:scale-110' />
+                <img src={finalImage} alt={data.name} className='w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110' />
             </div>
 
             <div className="flex-1 flex flex-col p-4">
                 <h3 className='font-bold text-gray-900 text-lg truncate mb-0.5 capitalize' title={data.name}>{data.name}</h3>
-                {data.shop?.name && (
-                    <p className='text-xs font-semibold text-gray-500 truncate mb-1.5 capitalize' title={data.shop.name}>{data.shop.name}</p>
-                )}
+                <p className='text-xs font-semibold text-gray-500 truncate mb-1.5 capitalize' title={data.shop?.name || 'Vingo'}>
+                    {data.shop?.name || 'Vingo'}
+                </p>
 
                 <div className='flex items-center gap-1.5'>
                     <div className='flex items-center'>

@@ -6,9 +6,10 @@ import { setShopsInMyCity } from "../redux/userSlice"
 
 function useGetShopByCity() {
     const dispatch = useDispatch()
-    const { currentCity } = useSelector(state => state.user)
+    const { currentCity, userData } = useSelector(state => state.user)
 
     useEffect(() => {
+        if (!userData) return;
         const fetchShops = async () => {
             try {
                 const city = currentCity?.trim() || "NoCity"

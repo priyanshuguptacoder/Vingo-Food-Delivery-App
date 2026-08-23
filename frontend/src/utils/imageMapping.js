@@ -37,6 +37,50 @@ import south3 from "../assets/food/south-indian/3.jpg"
 import defaultFood from "../assets/image2.webp"
 import defaultShop from "../assets/image11.jpg"
 
+const exactFoodImages = {
+    "margherita pizza": pizza1,
+    "cheese pizza": pizza2,
+    "pepperoni pizza": pizza3,
+    "chicken pepperoni pizza": pizza3,
+    "paneer tikka pizza": pizza2,
+    "farmhouse pizza": pizza1,
+    "veggie burst pizza": pizza2,
+    "butter chicken": north2,
+    "paneer butter masala": north1,
+    "kadai paneer": north1,
+    "naan": north3,
+    "garlic naan": north3,
+    "club sandwich": sandwich1,
+    "grilled sandwich": sandwich2,
+    "veg sandwich": sandwich3,
+    "french fries": snacks2,
+    "peri peri fries": snacks2,
+    "samosa": snacks1,
+    "garlic bread": snacks3,
+    "masala dosa": south1,
+    "plain dosa": south1,
+    "idli": south2,
+    "vada": south3,
+    "momos": chinese2,
+    "veg momos": chinese2,
+    "chicken momos": chinese2,
+    "noodles": chinese1,
+    "hakka noodles": chinese1,
+    "fried rice": chinese3,
+    "chocolate brownie": desserts1,
+    "cake": desserts2,
+    "ice cream": desserts3,
+    "cold coffee": desserts3,
+    "biryani": biryani1,
+    "chicken biryani": biryani1,
+    "mutton biryani": biryani2,
+    "veg biryani": biryani3,
+    "chicken burger": burger2,
+    "veg burger": burger3,
+    "cheese burger": burger3,
+    "beef burger": burger1
+}
+
 const foodImages = {
     pizza: [pizza1, pizza2, pizza3],
     burger: [burger1, burger2, burger3],
@@ -71,17 +115,30 @@ const getHash = (str) => {
 
 export const getFoodImage = (name) => {
     if(!name) return defaultFood;
-    const lowerName = name.toLowerCase();
+    const lowerName = name.toLowerCase().trim();
     
+    // 1. Exact mapping
+    if (exactFoodImages[lowerName]) {
+        return exactFoodImages[lowerName];
+    }
+    
+    // 2. Partial match mapping (if item name contains 'paneer', etc.)
+    for (const key in exactFoodImages) {
+        if (lowerName.includes(key)) {
+            return exactFoodImages[key];
+        }
+    }
+    
+    // 3. Category deterministic fallback
     let category = "snack"; // default
     if (lowerName.includes("pizza")) category = "pizza";
     else if (lowerName.includes("burger")) category = "burger";
     else if (lowerName.includes("sandwich")) category = "sandwich";
     else if (lowerName.includes("biryani")) category = "biryani";
-    else if (lowerName.includes("chicken") || lowerName.includes("paneer") || lowerName.includes("naan")) category = "north";
-    else if (lowerName.includes("noodles") || lowerName.includes("momos") || lowerName.includes("rice")) category = "chinese";
-    else if (lowerName.includes("dessert") || lowerName.includes("cake") || lowerName.includes("chocolate") || lowerName.includes("ice cream")) category = "dessert";
-    else if (lowerName.includes("dosa") || lowerName.includes("idli") || lowerName.includes("vada")) category = "south";
+    else if (lowerName.includes("chicken") || lowerName.includes("paneer") || lowerName.includes("naan") || lowerName.includes("dal")) category = "north";
+    else if (lowerName.includes("noodles") || lowerName.includes("momos") || lowerName.includes("rice") || lowerName.includes("manchurian")) category = "chinese";
+    else if (lowerName.includes("dessert") || lowerName.includes("cake") || lowerName.includes("chocolate") || lowerName.includes("ice cream") || lowerName.includes("sweet")) category = "dessert";
+    else if (lowerName.includes("dosa") || lowerName.includes("idli") || lowerName.includes("vada") || lowerName.includes("uttapam")) category = "south";
     
     const imageArray = foodImages[category];
     const index = getHash(name) % imageArray.length;

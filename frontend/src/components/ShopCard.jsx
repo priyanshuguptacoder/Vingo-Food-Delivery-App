@@ -8,7 +8,7 @@ function ShopCard({ name, image, address, onClick }) {
 
   return (
     <div className='w-[280px] h-[220px] md:w-[320px] md:h-[240px] rounded-2xl shrink-0 overflow-hidden shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative group cursor-pointer' onClick={onClick}>
-        <img src={finalImage} alt={name} className='absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500'/>
+        <img src={finalImage} alt={name} className='absolute inset-0 w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-500'/>
         
         <div className='absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-4'>
             <h3 className='text-xl font-extrabold text-white line-clamp-2 capitalize drop-shadow-md leading-tight mb-1'>{name}</h3>

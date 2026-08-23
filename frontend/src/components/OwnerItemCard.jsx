@@ -27,7 +27,7 @@ function OwnerItemCard({data}) {
   return (
     <div className='flex bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow overflow-hidden border border-gray-100 w-full max-w-2xl'>
       <div className='w-36 h-36 flex-shrink-0 bg-gray-50'>
-        <img src={finalImage} alt={data.name} className='w-full h-full object-cover'/>
+        <img src={finalImage} alt={data.name} className='w-full h-full object-cover object-center'/>
       </div>
       <div className='flex flex-col justify-between p-4 flex-1'>
           <div>

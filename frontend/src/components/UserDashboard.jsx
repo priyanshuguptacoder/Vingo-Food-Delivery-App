@@ -123,7 +123,7 @@ function UserDashboard() {
             {shopInMyCity?.length > 0 ? shopInMyCity.map((shop, index) => (
               <ShopCard name={shop.name} image={shop.image} address={shop.address} key={index} onClick={() => navigate(`/shop/${shop._id}`)} />
             )) : (
-              <div className='text-gray-500 italic py-4'>No shops found in {currentCity}.</div>
+              <div className='text-gray-500 font-medium py-8 w-full text-center'>No restaurants available right now.</div>
             )}
           </div>
           

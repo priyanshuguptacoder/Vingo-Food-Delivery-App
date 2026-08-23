@@ -14,6 +14,8 @@ function useGetCity() {
     const apiKey = import.meta.env.VITE_GEOAPIKEY
 
     useEffect(() => {
+        if (!userData) return;
+
         if (!navigator.geolocation) {
             alert(
                 "Location is not supported by your browser. Showing recommended restaurants."
