@@ -34,7 +34,7 @@ function useGetShopByCity() {
         }
 
         fetchShops()
-    }, [currentCity])
+    }, [currentCity, userData?._id])
 
     return null
 }

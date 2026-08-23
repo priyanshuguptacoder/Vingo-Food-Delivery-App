@@ -34,7 +34,7 @@ function useGetItemsByCity() {
         }
 
         fetchItems()
-    }, [currentCity])
+    }, [currentCity, userData?._id])
 
     return null
 }
