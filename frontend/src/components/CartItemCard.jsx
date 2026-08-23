@@ -29,7 +29,10 @@ function CartItemCard({data}) {
             <img src={finalImage} alt={data.name} className='w-full h-full object-cover'/>
         </div>
         <div className='flex-1'>
-            <h1 className='font-bold text-gray-900 text-lg mb-1 capitalize'>{data.name}</h1>
+            <h1 className='font-bold text-gray-900 text-lg mb-0.5 capitalize'>{data.name}</h1>
+            {data.shop?.name && (
+                <p className='text-xs font-semibold text-gray-500 mb-1.5 capitalize'>{data.shop.name}</p>
+            )}
             <p className='text-sm text-gray-500 font-medium'>₹{data.price} x {data.quantity}</p>
             <p className="font-extrabold text-[#ff4d2d] text-lg mt-1">₹{data.price * data.quantity}</p>
         </div>
