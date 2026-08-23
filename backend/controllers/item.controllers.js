@@ -110,8 +110,8 @@ export const editItem = async (req, res) => {
             });
         }
 
-        const shop = await Shop.findOne({
-            owner: req.userId
+        await shop.populate({
+            path: "items",
         }).populate({
             path: "items",
             options: {
@@ -161,8 +161,8 @@ export const deleteItem = async (req, res) => {
     try {
         const itemId = req.params.itemId;
 
-        const shop = await Shop.findOne({
-            owner: req.userId
+        await shop.populate({
+            path: "items",
         });
         
         if (!shop) {
