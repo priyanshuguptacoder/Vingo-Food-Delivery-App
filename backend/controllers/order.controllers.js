@@ -357,6 +357,12 @@ export const updateOrderStatus = async (req, res) => {
             })
         }
 
+        if (shopOrder.owner && String(shopOrder.owner) !== String(req.userId)) {
+            return res.status(403).json({
+                message: "unauthorized order update"
+            })
+        }
+
         shopOrder.status = status
 
         let deliveryBoysPayload = []
