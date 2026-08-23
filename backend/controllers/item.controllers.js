@@ -70,6 +70,20 @@ export const editItem = async (req, res) => {
             price
         } = req.body;
 
+        const shop = await Shop.findOne({ owner: req.userId });
+        if (!shop) {
+            return res.status(403).json({ message: "unauthorized: you don't own a shop" });
+        }
+        
+        const existingItem = await Item.findById(itemId);
+        if (!existingItem) {
+            return res.status(400).json({ message: "item not found" });
+        }
+        
+        if (existingItem.shop.toString() !== shop._id.toString()) {
+            return res.status(403).json({ message: "unauthorized to edit this item" });
+        }
+
         const updateData = {
             name,
             category,
@@ -147,17 +161,24 @@ export const deleteItem = async (req, res) => {
     try {
         const itemId = req.params.itemId;
 
-        const item = await Item.findByIdAndDelete(itemId);
-
-        if (!item) {
-            return res.status(400).json({
-                message: "item not found"
-            });
-        }
-
         const shop = await Shop.findOne({
             owner: req.userId
         });
+        
+        if (!shop) {
+            return res.status(403).json({ message: "unauthorized: you don't own a shop" });
+        }
+        
+        const existingItem = await Item.findById(itemId);
+        if (!existingItem) {
+            return res.status(400).json({ message: "item not found" });
+        }
+        
+        if (existingItem.shop.toString() !== shop._id.toString()) {
+            return res.status(403).json({ message: "unauthorized to delete this item" });
+        }
+
+        const item = await Item.findByIdAndDelete(itemId);
 
         if (shop) {
             shop.items = shop.items.filter(

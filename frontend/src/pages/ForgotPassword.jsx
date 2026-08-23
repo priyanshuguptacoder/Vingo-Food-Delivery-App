@@ -118,8 +118,8 @@ function ForgotPassword() {
         {step === 2 && (
           <div className='animate-fadeIn'>
                 <div className='mb-6 space-y-1.5'>
-                    <label htmlFor="otp" className='block text-sm font-bold text-gray-700 ml-1'>6-Digit Code</label>
-                    <input type="text" className='w-full px-4 py-3.5 border border-gray-200 bg-gray-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#ff4d2d]/30 focus:border-[#ff4d2d] transition-all font-bold text-center tracking-[0.5em] text-xl text-gray-800' placeholder='••••••' onChange={(e)=>setOtp(e.target.value)} value={otp} maxLength={6} required/>
+                    <label htmlFor="otp" className='block text-sm font-bold text-gray-700 ml-1'>4-Digit Code</label>
+                    <input type="text" className='w-full px-4 py-3.5 border border-gray-200 bg-gray-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#ff4d2d]/30 focus:border-[#ff4d2d] transition-all font-bold text-center tracking-[0.5em] text-xl text-gray-800' placeholder='••••' onChange={(e)=>setOtp(e.target.value)} value={otp} maxLength={4} required/>
                 </div>
                 <button className={`w-full py-4 rounded-xl transition-all duration-200 bg-[#ff4d2d] text-white font-bold text-lg shadow-md shadow-orange-200 hover:bg-[#e64323] hover:-translate-y-1 active:scale-[0.98] cursor-pointer flex justify-center items-center mt-2`} onClick={handleVerifyOtp} disabled={loading || otp.length < 4}>
                     {loading ? <ClipLoader size={24} color='white'/> : "Verify Code"}

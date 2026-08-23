@@ -271,7 +271,7 @@ function DeliveryBoy() {
             ) : (
               <div className='p-6 border border-gray-200 rounded-2xl bg-gray-50 shadow-sm'>
                 <p className='text-sm font-medium text-gray-700 mb-3 text-center'>Enter the OTP sent to <span className='font-bold text-gray-900'>{currentOrder.user.fullName}</span> to confirm delivery</p>
-                <input type="text" className='w-full border border-gray-300 px-4 py-3 rounded-xl mb-4 focus:outline-none focus:ring-2 focus:ring-[#ff4d2d]/30 focus:border-[#ff4d2d] text-center text-xl font-bold tracking-widest text-gray-800 bg-white shadow-sm' placeholder='_ _ _ _ _ _' maxLength={6} onChange={(e)=>setOtp(e.target.value)} value={otp}/>
+                <input type="text" className='w-full border border-gray-300 px-4 py-3 rounded-xl mb-4 focus:outline-none focus:ring-2 focus:ring-[#ff4d2d]/30 focus:border-[#ff4d2d] text-center text-xl font-bold tracking-widest text-gray-800 bg-white shadow-sm' placeholder='_ _ _ _' maxLength={4} onChange={(e)=>setOtp(e.target.value)} value={otp}/>
                 
                 {message && <div className='mb-4 p-3 bg-green-50 border border-green-200 text-green-700 rounded-lg text-center font-semibold text-sm flex items-center justify-center gap-2'><FaCheck /> {message}</div>}
 
