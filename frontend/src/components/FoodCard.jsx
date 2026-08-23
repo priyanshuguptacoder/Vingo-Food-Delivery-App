@@ -49,7 +49,7 @@ function FoodCard({ data }) {
             </div>
 
             <div className="flex-1 flex flex-col p-4">
-                <h3 className='font-bold text-gray-900 text-lg truncate mb-1' title={data.name}>{data.name}</h3>
+                <h3 className='font-bold text-gray-900 text-lg truncate mb-1 capitalize' title={data.name}>{data.name}</h3>
 
                 <div className='flex items-center gap-1.5'>
                     <div className='flex items-center'>

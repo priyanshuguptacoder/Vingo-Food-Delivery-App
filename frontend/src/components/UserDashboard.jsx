@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import Nav from './Nav'
 import { categories } from '../category'
 import CategoryCard from './CategoryCard'
+import ShopCard from './ShopCard'
 import { FaCircleChevronLeft } from "react-icons/fa6";
 import { FaCircleChevronRight } from "react-icons/fa6";
 import { useSelector } from 'react-redux';
@@ -118,9 +119,9 @@ function UserDashboard() {
           {showLeftShopButton && <button className='absolute -left-4 top-1/2 -translate-y-1/2 bg-white text-[#ff4d2d] p-2.5 rounded-full shadow-lg hover:scale-110 transition-transform z-10 border border-gray-100 opacity-0 group-hover:opacity-100' onClick={() => scrollHandler(shopScrollRef, "left")}><FaCircleChevronLeft size={24} />
           </button>}
 
-          <div className='w-full flex overflow-x-auto gap-5 pb-4 scroll-smooth no-scrollbar' ref={shopScrollRef}>
+          <div className='w-full flex overflow-x-auto gap-5 pb-4 scroll-smooth no-scrollbar p-2' ref={shopScrollRef}>
             {shopInMyCity?.length > 0 ? shopInMyCity.map((shop, index) => (
-              <CategoryCard name={shop.name} image={shop.image} key={index} onClick={() => navigate(`/shop/${shop._id}`)} />
+              <ShopCard name={shop.name} image={shop.image} address={shop.address} key={index} onClick={() => navigate(`/shop/${shop._id}`)} />
             )) : (
               <div className='text-gray-500 italic py-4'>No shops found in {currentCity}.</div>
             )}

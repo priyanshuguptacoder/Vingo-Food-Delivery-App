@@ -203,8 +203,8 @@ function LandingPage() {
             </section>
 
             {/* Footer */}
-            <footer className="w-full py-12 px-6 bg-gray-900 text-gray-400">
-                <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <footer className="w-full pt-12 pb-8 px-6 bg-gray-900 text-gray-400">
+                <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 mb-12">
                     <div className="flex flex-col items-center md:items-start">
                         <h3 className="text-2xl font-bold text-white mb-1">Vingo</h3>
                         <p className="text-sm">Food Delivery Platform</p>
@@ -214,6 +214,12 @@ function LandingPage() {
                         <a href="https://www.linkedin.com/in/priyanshu-gupta-b98689376/" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">LinkedIn</a>
                         <a href="https://vingo-food-delivery-app-1.onrender.com/" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">Live Demo</a>
                     </div>
+                </div>
+                
+                <div className="max-w-6xl mx-auto pt-8 border-t border-gray-800 flex flex-col items-center justify-center text-center">
+                    <p className="text-sm text-gray-400 font-medium tracking-wide">
+                        Made with ❤️ by Priyanshu
+                    </p>
                 </div>
             </footer>
         </div>
