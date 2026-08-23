@@ -1,6 +1,7 @@
 import pizza1 from "../assets/food/pizza/1.jpg"
 import pizza2 from "../assets/food/pizza/2.jpg"
 import pizza3 from "../assets/food/pizza/3.jpg"
+import pizza4 from "../assets/food/pizza/4.jpg"
 
 import burger1 from "../assets/food/burgers/1.jpg"
 import burger2 from "../assets/food/burgers/2.jpg"
@@ -17,6 +18,8 @@ import biryani3 from "../assets/food/biryani/3.jpg"
 import north1 from "../assets/food/north-indian/1.jpg"
 import north2 from "../assets/food/north-indian/2.jpg"
 import north3 from "../assets/food/north-indian/3.jpg"
+import north4 from "../assets/food/north-indian/4.jpg"
+import north5 from "../assets/food/north-indian/5.jpg"
 
 import chinese1 from "../assets/food/chinese/1.jpg"
 import chinese2 from "../assets/food/chinese/2.jpg"
@@ -29,19 +32,20 @@ import snacks3 from "../assets/food/snacks/3.jpg"
 import desserts1 from "../assets/food/desserts/1.jpg"
 import desserts2 from "../assets/food/desserts/2.jpg"
 import desserts3 from "../assets/food/desserts/3.jpg"
+import desserts4 from "../assets/food/desserts/4.jpg"
 
 import south1 from "../assets/food/south-indian/1.jpg"
 import south2 from "../assets/food/south-indian/2.jpg"
 import south3 from "../assets/food/south-indian/3.jpg"
 
-import defaultFood from "../assets/image2.webp"
-import defaultShop from "../assets/image11.jpg"
+import defaultFood from "../assets/food-fallback.webp"
+import defaultShop from "../assets/shop-fallback.webp"
 
 const exactFoodImages = {
     "margherita pizza": pizza1,
     "cheese pizza": pizza2,
     "pepperoni pizza": pizza3,
-    "chicken pepperoni pizza": pizza3,
+    "chicken pepperoni pizza": pizza4,
     "paneer tikka pizza": pizza2,
     "farmhouse pizza": pizza1,
     "veggie burst pizza": pizza2,
@@ -82,14 +86,14 @@ const exactFoodImages = {
 }
 
 const foodImages = {
-    pizza: [pizza1, pizza2, pizza3],
+    pizza: [pizza1, pizza2, pizza3, pizza4],
     burger: [burger1, burger2, burger3],
     sandwich: [sandwich1, sandwich2, sandwich3],
     biryani: [biryani1, biryani2, biryani3],
-    north: [north1, north2, north3],
+    north: [north1, north2, north3, north4, north5],
     chinese: [chinese1, chinese2, chinese3],
     snack: [snacks1, snacks2, snacks3],
-    dessert: [desserts1, desserts2, desserts3],
+    dessert: [desserts1, desserts2, desserts3, desserts4],
     south: [south1, south2, south3]
 }
 
